@@ -1,4 +1,5 @@
-import { Avatar, Group, Text } from '@mantine/core';
+import { Avatar, Group, Text, UnstyledButton } from '@mantine/core';
+import Link from 'next/link';
 import { UserData } from '../../types';
 
 interface PostOwnerProps {
@@ -7,10 +8,14 @@ interface PostOwnerProps {
 
 const PostOwner: React.FC<PostOwnerProps> = ({ owner }) => {
   return (
-    <Group>
-      <Avatar src={owner.photoUrl} alt={owner.username} radius="xl" />
-      <Text weight={500}>{owner.username}</Text>
-    </Group>
+    <Link href={`/user/${owner.id}`} passHref>
+      <UnstyledButton>
+        <Group>
+          <Avatar src={owner.photoUrl} alt={owner.username} radius="xl" />
+          <Text weight={500}>{owner.username}</Text>
+        </Group>
+      </UnstyledButton>
+    </Link>
   );
 };
 

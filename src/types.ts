@@ -3,7 +3,13 @@ export type UserData = {
   username: string;
   photoUrl: string;
   about: string;
+  contacts: UserContacs[];
   joinedAt?: number;
+};
+
+export type UserContacs = {
+  name: string;
+  link: string;
 };
 
 export type PostData = {
@@ -43,6 +49,9 @@ export type useAuthType = {
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signInWithGitHub: () => Promise<void>;
+  updateAbout: (about: string) => Promise<void>;
+  updateUsername: (username: string) => Promise<void>;
+  updateContacts: (contacts: UserContacs[]) => Promise<void>;
 };
 
 /** Default values for useAuth */
@@ -52,6 +61,9 @@ export const authContextDefaultValues: useAuthType = {
   signOut: async () => {},
   signInWithGoogle: async () => {},
   signInWithGitHub: async () => {},
+  updateAbout: async () => {},
+  updateUsername: async () => {},
+  updateContacts: async () => {},
 };
 
 /** Type for useParticipants hook */

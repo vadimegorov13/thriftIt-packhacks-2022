@@ -22,6 +22,7 @@ exports.createUserDocument = functions.auth.user().onCreate(async (user) => {
     photoUrl: user.photoURL,
     about: '',
     joinedAt: Date.now(),
+    contacts: [],
   };
 
   await db.collection('users').doc(userId).set(userData);

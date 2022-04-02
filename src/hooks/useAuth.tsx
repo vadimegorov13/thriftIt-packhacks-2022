@@ -1,4 +1,9 @@
-import { authContextDefaultValues, useAuthType, UserData } from '../types';
+import {
+  authContextDefaultValues,
+  useAuthType,
+  UserContacs,
+  UserData,
+} from '../types';
 import {
   createContext,
   ReactNode,
@@ -68,6 +73,45 @@ export const useAuthProvider = (): useAuthType => {
     });
   };
 
+  const updateAbout = async (about: string) => {
+    if (user) {
+      try {
+        await db.collection('users').doc(user.id).update({ about });
+      } catch (err) {
+        console.log('Something went wrong: ', err);
+      }
+    } else {
+      console.log('User is not logged in!');
+      router.push('/sign-in');
+    }
+  };
+
+  const updateUsername = async (username: string) => {
+    if (user) {
+      try {
+        await db.collection('users').doc(user.id).update({ username });
+      } catch (err) {
+        console.log('Something went wrong: ', err);
+      }
+    } else {
+      console.log('User is not logged in!');
+      router.push('/sign-in');
+    }
+  };
+
+  const updateContacts = async (contacts: UserContacs[]) => {
+    if (user) {
+      try {
+        await db.collection('users').doc(user.id).update({ contacts });
+      } catch (err) {
+        console.log('Something went wrong: ', err);
+      }
+    } else {
+      console.log('User is not logged in!');
+      router.push('/sign-in');
+    }
+  };
+
   // Returns user data from the firestore db.
   const getUserAdditionalData = async (user: UserData): Promise<void> => {
     await db
@@ -105,6 +149,7 @@ export const useAuthProvider = (): useAuthType => {
           username: user!.displayName!,
           photoUrl: user!.photoURL!,
           about: '',
+          contacts: [],
         };
         handleAuthStateChanged(userData);
       }
@@ -119,5 +164,8 @@ export const useAuthProvider = (): useAuthType => {
     signOut,
     signInWithGoogle,
     signInWithGitHub,
+    updateAbout,
+    updateUsername,
+    updateContacts,
   };
 };
