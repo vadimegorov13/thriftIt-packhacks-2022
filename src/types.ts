@@ -26,7 +26,7 @@ export type PostForm = {
   reason: string;
   quality: number;
   tags: string[];
-}
+};
 
 /** Type for useAuth hook */
 export type useAuthType = {

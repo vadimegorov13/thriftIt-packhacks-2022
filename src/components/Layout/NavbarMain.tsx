@@ -1,5 +1,5 @@
 import { UnstyledButton, Group, Text, ThemeIcon } from '@mantine/core';
-import { InfoSquare, SmartHome} from 'tabler-icons-react';
+import { InfoSquare, SmartHome } from 'tabler-icons-react';
 import Link from 'next/link';
 import { UserData } from '../../types';
 import { useAuth } from '../../hooks/useAuth';
