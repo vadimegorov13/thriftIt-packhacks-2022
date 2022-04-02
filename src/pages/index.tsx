@@ -40,7 +40,7 @@ const Home = () => {
 
     body = (
       <Box>
-        <Title>This is your posts</Title>
+        <Title>All posts</Title>
         <ShowPosts posts={posts} />
       </Box>
     );

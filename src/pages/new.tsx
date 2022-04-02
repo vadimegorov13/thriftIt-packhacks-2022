@@ -1,4 +1,6 @@
 import {
+  ActionIcon,
+  Box,
   Button,
   Center,
   Group,
@@ -6,7 +8,8 @@ import {
   Text,
   TextInput,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
+import { formList, useForm } from '@mantine/form';
+import { Trash } from 'tabler-icons-react';
 import Layout from '../components/Layout/Layout';
 import { usePost } from '../hooks/usePost';
 import { useRequireAuth } from '../hooks/useRequireAuth';
@@ -21,6 +24,7 @@ const New = () => {
       description: '',
       reason: '',
       quality: 0,
+      tags: formList([{ tag: '' }]),
     },
 
     validate: {
@@ -36,6 +40,24 @@ const New = () => {
         value !== 0 ? null : 'Please change the quality score',
     },
   });
+
+  const fields = form.values.tags.map((_, index) => (
+    <Group key={index} mt="xs">
+      <TextInput
+        placeholder="clothes, tools, electronics..."
+        required
+        sx={{ flex: 1 }}
+        {...form.getListInputProps('tags', index, 'tag')}
+      />
+      <ActionIcon
+        color="red"
+        variant="hover"
+        onClick={() => form.removeListItem('tags', index)}
+      >
+        <Trash size={16} />
+      </ActionIcon>
+    </Group>
+  ));
 
   let body = null;
 
@@ -83,6 +105,16 @@ const New = () => {
             max={10}
             {...form.getInputProps('quality')}
           />
+
+          <Box>Tags: </Box>
+
+          {fields}
+
+          <Group position="center" mt="md">
+            <Button onClick={() => form.addListItem('tags', { tag: '' })}>
+              Add Tag
+            </Button>
+          </Group>
 
           <Group position="right" mt="md">
             <Button type="submit">Submit</Button>

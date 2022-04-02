@@ -2,7 +2,6 @@ export type UserData = {
   id: string;
   username: string;
   photoUrl: string;
-  contacts: string[];
   about: string;
   joinedAt?: number;
 };
@@ -14,7 +13,7 @@ export type PostData = {
   reason: string;
   quality: number;
   // pictures: string[];
-  // tags: string[];
+  tags: PostTag[];
   available: boolean;
   createdAt: number;
   updatedAt: number;
@@ -25,12 +24,16 @@ export type UserPosts = {
   postId: string;
 };
 
+export type PostTag = {
+  tag: string;
+};
+
 export type PostForm = {
   title: string;
   description: string;
   reason: string;
   quality: number;
-  // tags: string[];
+  tags: PostTag[];
 };
 
 /** Type for useAuth hook */

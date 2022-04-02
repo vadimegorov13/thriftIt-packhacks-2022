@@ -14,7 +14,7 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 // return firebase components
-export { auth, db };
+export { auth, db, app };
 
 console.log(
   app.name ? 'Firebase is working!😎😎😎' : 'Firebase is not working 😫😪🤔'

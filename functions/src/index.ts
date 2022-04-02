@@ -20,10 +20,21 @@ exports.createUserDocument = functions.auth.user().onCreate(async (user) => {
     username: user.displayName,
     email: user.email,
     photoUrl: user.photoURL,
-    contacts: [],
     about: '',
     joinedAt: Date.now(),
   };
 
   await db.collection('users').doc(userId).set(userData);
+  const contacts = await db
+    .collection('users')
+    .doc(userId)
+    .collection('contacts')
+    .doc();
+
+  await db
+    .collection('users')
+    .doc(userId)
+    .collection('contacts')
+    .doc(contacts.id)
+    .set({});
 });

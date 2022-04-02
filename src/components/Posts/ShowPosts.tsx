@@ -1,6 +1,6 @@
-import { Box, Title } from '@mantine/core';
+import { SimpleGrid } from '@mantine/core';
 import { PostData } from '../../types';
-import Layout from '../Layout/Layout';
+import PostCard from './PostCard';
 
 interface ShowPostsProps {
   posts: PostData[];
@@ -8,15 +8,23 @@ interface ShowPostsProps {
 
 const ShowPosts: React.FC<ShowPostsProps> = ({ posts }) => {
   const body = (
-    <Box>
+    <SimpleGrid
+      cols={2}
+      spacing="lg"
+      breakpoints={[
+        { maxWidth: 980, cols: 2, spacing: 'md' },
+        { maxWidth: 755, cols: 1, spacing: 'sm' },
+        { maxWidth: 600, cols: 1, spacing: 'sm' },
+      ]}
+    >
       {posts.map((post: PostData) => (
-        <Box key={post.id}>
-          <Title>{post.title}</Title>
-        </Box>
+        <div key={post.id}>
+          <PostCard post={post} />
+        </div>
       ))}
-    </Box>
+    </SimpleGrid>
   );
-  return <Layout>{body}</Layout>;
+  return <>{body}</>;
 };
 
 export default ShowPosts;

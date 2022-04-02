@@ -104,7 +104,6 @@ export const useAuthProvider = (): useAuthType => {
           id: user.uid,
           username: user!.displayName!,
           photoUrl: user!.photoURL!,
-          contacts: [],
           about: '',
         };
         handleAuthStateChanged(userData);
