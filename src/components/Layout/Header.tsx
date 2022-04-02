@@ -107,6 +107,13 @@ const HeaderMain: React.FC<LayoutProps> = ({ user, open, setOpen }) => {
         </Box>
         {user ? (
           <Box className={classes.leftNav}>
+            <Link href="/myposts" passHref={true}>
+              <UnstyledButton className={classes.createButton} ml="sm">
+                <Text mx="sm" weight={500} py={6}>
+                  My posts
+                </Text>
+              </UnstyledButton>
+            </Link>
             <Link href="/new" passHref={true}>
               <UnstyledButton className={classes.createButton} ml="sm">
                 <Text mx="sm" weight={500} py={6}>

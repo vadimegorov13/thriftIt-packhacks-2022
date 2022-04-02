@@ -57,5 +57,11 @@ export type usePostType = {
   deletePost: (postId: string) => Promise<void>;
   editPost: (postId: string, post: PostForm) => Promise<void>;
   toggleAvailability: (postId: string) => Promise<void>;
-  getMyPosts: (setMyPosts: any, isSubscribed: boolean) => void;
+  getUserPosts: (
+    userId: string,
+    setMyPosts: any,
+    isSubscribed: boolean
+  ) => void;
+  getAllPosts: (setPosts: any, isSubscribed: boolean) => void;
+  postLoading: boolean;
 };

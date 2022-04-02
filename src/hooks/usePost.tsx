@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+import { useState } from 'react';
 import { db } from '../firebase/firebase';
 import { PostData, PostForm, usePostType } from '../types';
 import { useAuth } from './useAuth';
@@ -6,6 +7,8 @@ import { useAuth } from './useAuth';
 export const usePost = (): usePostType => {
   const { user } = useAuth();
   const router = useRouter();
+
+  const [postLoading, setLoading] = useState(true);
 
   const createPost = async (post: PostForm) => {
     if (user) {
@@ -126,38 +129,52 @@ export const usePost = (): usePostType => {
   //           .doc(newPost.id)
   //           .set({ postId: newPost.id });
 
-  const getMyPosts = (setMyPosts: any, isSubscribed: boolean) => {
+  const getUserPosts = (
+    userId: string,
+    setMyPosts: any,
+    isSubscribed: boolean
+  ) => {
     if (!isSubscribed) return;
 
-    if (user) {
-      try {
-        db.collection('users')
-          .doc(user.id)
-          .collection('posts')
-          .onSnapshot((snap) => {
-            const postIds: string[] = snap.docs.map((doc) => doc.id);
-            const posts: PostData[] = [];
+    try {
+      db.collection('users')
+        .doc(userId)
+        .collection('posts')
+        .onSnapshot((snap) => {
+          const posts: PostData[] = [];
 
-            postIds.map(async (postId) => {
-              await db
-                .collection('posts')
-                .doc(postId)
-                .get()
-                .then((res) => {
-                  posts.push(res.data() as PostData);
-                });
-            });
-
-            if (isSubscribed) {
-              setMyPosts(posts as PostData[]);
-            }
+          snap.docs.map(async (doc) => {
+            await db
+              .collection('posts')
+              .doc(doc.id)
+              .get()
+              .then((res) => {
+                posts.push(res.data() as PostData);
+              });
           });
-      } catch (err) {
-        console.log('Something went wrong: ', err);
-      }
-    } else {
-      console.log('User is not logged in!');
-      router.push('/sign-in');
+          console.log('setposts ', posts);
+          setMyPosts(posts);
+          setLoading(false);
+        });
+    } catch (err) {
+      console.log('Something went wrong: ', err);
+    }
+  };
+
+  const getAllPosts = (setPosts: any, isSubscribed: boolean) => {
+    if (!isSubscribed) return;
+
+    try {
+      db.collection('posts')
+        .orderBy('createdAt')
+        .onSnapshot((snap) => {
+          const posts = snap.docs.map((doc) => ({
+            ...doc.data(),
+          }));
+          setPosts(posts as PostData[]);
+        });
+    } catch (err) {
+      console.log('Something went wrong: ', err);
     }
   };
 
@@ -166,6 +183,8 @@ export const usePost = (): usePostType => {
     deletePost,
     editPost,
     toggleAvailability,
-    getMyPosts,
+    getUserPosts,
+    getAllPosts,
+    postLoading,
   };
 };

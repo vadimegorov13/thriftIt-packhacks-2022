@@ -1,25 +1,27 @@
 import { Box, Text, Title } from '@mantine/core';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Layout from '../components/Layout/Layout';
 import ShowPosts from '../components/Posts/ShowPosts';
-import { useAuth } from '../hooks/useAuth';
 import { usePost } from '../hooks/usePost';
+import { useRequireAuth } from '../hooks/useRequireAuth';
 import { PostData } from '../types';
 
-const Home = () => {
-  const { loading } = useAuth();
-  const { getAllPosts } = usePost();
-  const [posts, setPosts] = useState<PostData[] | null>(null);
+const MyPosts = () => {
+  const { user, loading } = useRequireAuth();
+  const { getUserPosts } = usePost();
+  const [myPosts, setMyPosts] = useState<PostData[] | null>(null);
 
   useEffect(() => {
     let isSubscribed = true;
 
-    getAllPosts(setPosts, isSubscribed);
+    if (user) {
+      getUserPosts(user!.id, setMyPosts, isSubscribed);
+    }
 
     return () => {
       isSubscribed = false;
     };
-  }, []);
+  }, [user]);
 
   let body = null;
 
@@ -29,19 +31,19 @@ const Home = () => {
         Loading...
       </Text>
     );
-  } else if (posts === null) {
+  } else if (myPosts === null) {
     body = (
       <Text align="center" size="xl">
         Loading posts...
       </Text>
     );
   } else {
-    console.log('posts', posts);
+    console.log('myPosts', myPosts);
 
     body = (
       <Box>
         <Title>This is your posts</Title>
-        <ShowPosts posts={posts} />
+        <ShowPosts posts={myPosts} />
       </Box>
     );
   }
@@ -49,4 +51,4 @@ const Home = () => {
   return <Layout>{body}</Layout>;
 };
 
-export default Home;
+export default MyPosts;
