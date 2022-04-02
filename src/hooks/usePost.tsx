@@ -138,25 +138,41 @@ export const usePost = (): usePostType => {
     if (!isSubscribed) return;
 
     try {
-      db.collection('users')
-        .doc(userId)
-        .collection('posts')
-        .onSnapshot((snap) => {
-          const posts: PostData[] = [];
+      // db.collection('users')
+      //   .doc(userId)
+      //   .collection('posts')
+      //   .onSnapshot((snap) => {
+      //     const posts: PostData[] = [];
 
-          snap.docs.map(async (doc) => {
-            await db
-              .collection('posts')
-              .doc(doc.id)
-              .get()
-              .then((res) => {
-                posts.push(res.data() as PostData);
-              });
-          });
-          console.log('setposts ', posts);
-          setMyPosts(posts);
-          setLoading(false);
+      //     snap.docs.map(async (doc) => {
+      //       await db
+      //         .collection('posts')
+      //         .doc(doc.id)
+      //         .get()
+      //         .then((res) => {
+      //           posts.push(res.data() as PostData);
+      //         });
+      //     });
+      //     console.log('setposts ', posts);
+      //     setMyPosts(posts);
+      //     setLoading(false);
+      //   });
+      db.collection('posts').onSnapshot((snap) => {
+        const posts = snap.docs.map((doc) => ({
+          ...(doc.data() as PostData),
+        }));
+
+        const userPosts: PostData[] = [];
+
+        posts.map((post) => {
+          if (post.ownerId === userId) {
+            userPosts.push(post);
+          }
         });
+        console.log('setposts ', posts);
+        setMyPosts(posts);
+        setLoading(false);
+      });
     } catch (err) {
       console.log('Something went wrong: ', err);
     }
