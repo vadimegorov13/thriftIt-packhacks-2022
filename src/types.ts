@@ -13,11 +13,16 @@ export type PostData = {
   description: string;
   reason: string;
   quality: number;
-  pictures: string[];
-  tags: string[];
+  // pictures: string[];
+  // tags: string[];
   available: boolean;
   createdAt: number;
   updatedAt: number;
+  ownerId: string;
+};
+
+export type UserPosts = {
+  postId: string;
 };
 
 export type PostForm = {
@@ -25,7 +30,7 @@ export type PostForm = {
   description: string;
   reason: string;
   quality: number;
-  tags: string[];
+  // tags: string[];
 };
 
 /** Type for useAuth hook */
@@ -44,4 +49,13 @@ export const authContextDefaultValues: useAuthType = {
   signOut: async () => {},
   signInWithGoogle: async () => {},
   signInWithGitHub: async () => {},
+};
+
+/** Type for useParticipants hook */
+export type usePostType = {
+  createPost: (post: PostForm) => Promise<void>;
+  deletePost: (postId: string) => Promise<void>;
+  editPost: (postId: string, post: PostForm) => Promise<void>;
+  toggleAvailability: (postId: string) => Promise<void>;
+  getMyPosts: (setMyPosts: any, isSubscribed: boolean) => void;
 };
