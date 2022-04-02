@@ -9,6 +9,7 @@ import {
 import { auth, db } from '../firebase/firebase';
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
+import { useRouter } from 'next/router';
 
 const AuthContext = createContext<useAuthType>(authContextDefaultValues);
 
@@ -29,6 +30,7 @@ export const useAuth = (): useAuthType => {
 export const useAuthProvider = (): useAuthType => {
   const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useState<UserData | null>(null);
+  const router = useRouter();
 
   const signInWithGoogle = async () => {
     const google = new firebase.auth.GoogleAuthProvider();
@@ -36,7 +38,10 @@ export const useAuthProvider = (): useAuthType => {
       .signInWithPopup(google)
       .then(() => console.log('login success'))
       .catch((err) => console.log(err.code))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        router.push('/');
+      });
     return;
   };
 
@@ -46,7 +51,10 @@ export const useAuthProvider = (): useAuthType => {
       .signInWithPopup(github)
       .then(() => console.log('login success'))
       .catch((err) => console.log(err.code))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        router.push('/');
+      });
     return;
   };
 
@@ -54,7 +62,10 @@ export const useAuthProvider = (): useAuthType => {
   const signOut = async (): Promise<void> => {
     // Change the state of the user
     if (user === null) return;
-    return await auth.signOut().then(() => setUser(null));
+    return await auth.signOut().then(() => {
+      setUser(null);
+      router.push('/');
+    });
   };
 
   // Returns user data from the firestore db.
@@ -93,6 +104,8 @@ export const useAuthProvider = (): useAuthType => {
           id: user.uid,
           username: user!.displayName!,
           photoUrl: user!.photoURL!,
+          contacts: [],
+          about: '',
         };
         handleAuthStateChanged(userData);
       }

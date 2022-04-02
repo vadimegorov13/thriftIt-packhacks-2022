@@ -44,7 +44,16 @@ const useStyles = createStyles((theme) => ({
     display: 'block',
     borderRadius: theme.radius.sm,
     color: 'black',
-    backgroundColor: '#eeaeca',
+    backgroundColor: theme.colors.pink[3],
+    '&:hover': {
+      backgroundColor: 'white',
+    },
+  },
+  createButton: {
+    display: 'block',
+    borderRadius: theme.radius.sm,
+    color: 'black',
+    backgroundColor: theme.colors.cyan[3],
     '&:hover': {
       backgroundColor: 'white',
     },
@@ -81,7 +90,7 @@ const HeaderMain: React.FC<LayoutProps> = ({ user, open, setOpen }) => {
           <Link href="/" passHref={true}>
             <UnstyledButton>
               <Group>
-                <ThemeIcon color="pink" variant="light">
+                <ThemeIcon color="cyan" variant="light">
                   <ListDetails />
                 </ThemeIcon>
                 <Title order={2}>ThriftIt</Title>
@@ -98,6 +107,13 @@ const HeaderMain: React.FC<LayoutProps> = ({ user, open, setOpen }) => {
         </Box>
         {user ? (
           <Box className={classes.leftNav}>
+            <Link href="/new" passHref={true}>
+              <UnstyledButton className={classes.createButton} ml="sm">
+                <Text mx="sm" weight={500} py={6}>
+                  Create a post
+                </Text>
+              </UnstyledButton>
+            </Link>
             <Link href="/" passHref={true}>
               <UnstyledButton
                 className={classes.logoutButton}
@@ -110,7 +126,17 @@ const HeaderMain: React.FC<LayoutProps> = ({ user, open, setOpen }) => {
               </UnstyledButton>
             </Link>
           </Box>
-        ) : null}
+        ) : (
+          <Box className={classes.leftNav}>
+            <Link href="/sign-in" passHref={true}>
+              <UnstyledButton className={classes.logoutButton} ml="sm">
+                <Text mx="sm" weight={500} py={6}>
+                  SignIn
+                </Text>
+              </UnstyledButton>
+            </Link>
+          </Box>
+        )}
       </Group>
     </Header>
   );

@@ -12,30 +12,18 @@ const db = admin.firestore();
 // });
 
 // Create a document for the user when user creates an account
-exports.createUserDocuments = functions.auth.user().onCreate(async (user) => {
+exports.createUserDocument = functions.auth.user().onCreate(async (user) => {
   const userId = user.uid;
-  // Create date
-  const date = {
-    createdAt: Date.now(),
-    updatedAt: Date.now(),
-  };
-
   // Declare user
   const userData = {
     id: userId,
     username: user.displayName,
     email: user.email,
     photoUrl: user.photoURL,
-    ...date,
-  };
-
-  // Declare history and favorite
-  const votes = {
-    votedTo: [],
-    ...date,
+    contacts: [],
+    about: '',
+    joinedAt: Date.now(),
   };
 
   await db.collection('users').doc(userId).set(userData);
-  await db.collection('snippets').doc(userId);
-  await db.collection('votes').doc(userId).set(votes);
 });

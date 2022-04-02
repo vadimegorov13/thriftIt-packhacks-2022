@@ -1,5 +1,5 @@
 import { UnstyledButton, Group, Text, ThemeIcon } from '@mantine/core';
-import { InfoSquare, SmartHome, History, Star } from 'tabler-icons-react';
+import { InfoSquare, SmartHome} from 'tabler-icons-react';
 import Link from 'next/link';
 import { UserData } from '../../types';
 import { useAuth } from '../../hooks/useAuth';
@@ -33,18 +33,6 @@ const loggedInData = [
     color: 'teal',
     label: 'About',
     href: '/about',
-  },
-  {
-    icon: <Star size={16} />,
-    color: 'grape',
-    label: 'Favorite',
-    href: '/favorite',
-  },
-  {
-    icon: <History size={16} />,
-    color: 'violet',
-    label: 'History',
-    href: '/history',
   },
 ];
 
