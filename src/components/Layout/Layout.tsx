@@ -58,7 +58,7 @@ const Layout: React.FC = ({ children }) => {
         </Navbar>
       }
     >
-      <Container size="md" px="md">
+      <Container size="lg" px="md">
         {children}
       </Container>
     </AppShell>

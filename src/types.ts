@@ -66,5 +66,6 @@ export type usePostType = {
     isSubscribed: boolean
   ) => void;
   getAllPosts: (setPosts: any, isSubscribed: boolean) => void;
+  getPost: (postId: string, setPost: any, isSubscribed: boolean) => void;
   postLoading: boolean;
 };

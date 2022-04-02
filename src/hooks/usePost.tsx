@@ -28,7 +28,10 @@ export const usePost = (): usePostType => {
           .doc(user.id)
           .collection('posts')
           .doc(newPost.id)
-          .set({ postId: newPost.id });
+          .set({ postId: newPost.id })
+          .then(() => {
+            router.push('/');
+          });
       } catch (err) {
         console.log('Something went wrong: ', err);
       }
@@ -40,6 +43,7 @@ export const usePost = (): usePostType => {
 
   const deletePost = async (postId: string) => {
     if (user) {
+      console.log('delete post');
       try {
         await db
           .collection('posts')
@@ -69,7 +73,7 @@ export const usePost = (): usePostType => {
     }
   };
 
-  const editPost = async (postId: string, post: PostForm) => {
+  const editPost = async (postId: string, postdata: PostForm) => {
     if (user) {
       try {
         await db
@@ -83,7 +87,10 @@ export const usePost = (): usePostType => {
                 await db
                   .collection('posts')
                   .doc(postId)
-                  .update({ ...post });
+                  .update({ ...postdata })
+                  .then(() => {
+                    router.push('/');
+                  });
               }
             }
           });
@@ -122,12 +129,6 @@ export const usePost = (): usePostType => {
       router.push('/sign-in');
     }
   };
-
-  //   await db.collection('users')
-  //           .doc(user.id)
-  //           .collection('posts')
-  //           .doc(newPost.id)
-  //           .set({ postId: newPost.id });
 
   const getUserPosts = (
     userId: string,
@@ -178,6 +179,20 @@ export const usePost = (): usePostType => {
     }
   };
 
+  const getPost = (postId: string, setPost: any, isSubscribed: boolean) => {
+    if (!isSubscribed) return;
+    try {
+      db.collection('posts')
+        .doc(postId)
+        .get()
+        .then((res) => {
+          setPost(res.data() as PostData);
+        });
+    } catch (err) {
+      console.log('Something went wrong: ', err);
+    }
+  };
+
   return {
     createPost,
     deletePost,
@@ -185,6 +200,7 @@ export const usePost = (): usePostType => {
     toggleAvailability,
     getUserPosts,
     getAllPosts,
+    getPost,
     postLoading,
   };
 };

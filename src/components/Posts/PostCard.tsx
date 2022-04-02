@@ -15,6 +15,7 @@ import { doc, getFirestore } from 'firebase/firestore';
 import { useDocumentOnce } from 'react-firebase-hooks/firestore';
 import { app } from '../../firebase/firebase';
 import PostOwner from './PostOwner';
+import ActionButtons from './ActionButtons';
 
 interface PostCardProps {
   post: PostData;
@@ -38,7 +39,10 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       <Card shadow="sm" p="lg" m={2}>
         <Group position="apart" style={{ marginBottom: 5 }}>
           <Title order={3}>{post.title}</Title>
-          <PostOwner owner={authorData?.data() as UserData} />
+          <ActionButtons
+            owner={authorData?.data() as UserData}
+            postId={post.id}
+          />
         </Group>
         <Card.Section>
           <Image
@@ -87,13 +91,16 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           </Badge>
         )}
 
-        <Group position="right">
-          <Button variant="light" color="pink" style={{ marginTop: 10 }}>
-            Contact
-          </Button>
-          <Button variant="light" color="blue" style={{ marginTop: 10 }}>
-            Save
-          </Button>
+        <Group position="apart">
+          <PostOwner owner={authorData?.data() as UserData} />
+          <Group position="right">
+            <Button variant="light" color="pink" style={{ marginTop: 10 }}>
+              Contact
+            </Button>
+            <Button variant="light" color="blue" style={{ marginTop: 10 }}>
+              Save
+            </Button>
+          </Group>
         </Group>
       </Card>
     );
