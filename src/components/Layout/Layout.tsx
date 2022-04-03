@@ -1,5 +1,11 @@
 import { useState } from 'react';
-import { createStyles, AppShell, Navbar, Container } from '@mantine/core';
+import {
+  createStyles,
+  AppShell,
+  Navbar,
+  Container,
+  Divider,
+} from '@mantine/core';
 import NavbarMainLinks, { NavbarMainLink } from './NavbarMain';
 import { Logout } from 'tabler-icons-react';
 import HeaderMain from './Header';
@@ -11,6 +17,7 @@ const useStyles = createStyles((theme) => ({
       display: 'none',
     },
     borderRight: 1,
+    backgroundColor: '#e5feff',
   },
   appShell: {
     display: 'flex',
@@ -19,7 +26,7 @@ const useStyles = createStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
-    backgroundColor: '#e5feff',
+    backgroundColor: '#f9feff',
   },
 }));
 
@@ -47,6 +54,7 @@ const Layout: React.FC = ({ children }) => {
           width={{ base: '100%', sm: 0 }}
           hidden={!open}
         >
+          <Divider />
           <Navbar.Section grow mt="xs">
             <NavbarMainLinks loading={loading} user={user} />
             {children}

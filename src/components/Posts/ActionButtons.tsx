@@ -23,11 +23,11 @@ const ActionButtons: React.FC<ActionButtonsProps> = ({ owner, postId }) => {
       {owner.id === user?.id ? (
         <Group>
           <Link href={`/edit/${postId}`} passHref>
-            <ActionIcon variant="filled" color="blue">
+            <ActionIcon color="cyan">
               <Edit />
             </ActionIcon>
           </Link>
-          <ActionIcon variant="filled" color="red" onClick={handleDelete}>
+          <ActionIcon color="orange" onClick={handleDelete}>
             <Trash />
           </ActionIcon>
         </Group>

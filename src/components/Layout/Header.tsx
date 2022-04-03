@@ -16,6 +16,10 @@ import { UserData } from '../../types';
 import { useAuth } from '../../hooks/useAuth';
 
 const useStyles = createStyles((theme) => ({
+  title: {
+    fontFamily: 'FarOut',
+    color: '#d5672f',
+  },
   links: {
     [theme.fn.smallerThan('sm')]: {
       display: 'none',
@@ -24,7 +28,7 @@ const useStyles = createStyles((theme) => ({
     width: '100%',
   },
   header: {
-    // background: '#B4CFEF',
+    background: '#e5feff',
     borderBottom: 1,
   },
   leftNav: {
@@ -35,18 +39,36 @@ const useStyles = createStyles((theme) => ({
     display: 'block',
     borderRadius: theme.radius.sm,
     color: 'black',
-
+    backgroundColor: '#e6e3bd',
     '&:hover': {
-      backgroundColor: 'white',
+      backgroundColor: '#f2f1df',
+    },
+  },
+  button2: {
+    display: 'block',
+    borderRadius: theme.radius.sm,
+    color: '#fffff7',
+    backgroundColor: '#3d2d1e',
+    '&:hover': {
+      backgroundColor: '#856d56',
+    },
+  },
+  button3: {
+    display: 'block',
+    borderRadius: theme.radius.sm,
+    color: '#fff990',
+    backgroundColor: '#558da5',
+    '&:hover': {
+      backgroundColor: '#92bed1',
     },
   },
   logoutButton: {
     display: 'block',
     borderRadius: theme.radius.sm,
-    color: 'black',
-    backgroundColor: theme.colors.pink[3],
+    color: '#e3f0ff',
+    backgroundColor: '#d5672f',
     '&:hover': {
-      backgroundColor: 'white',
+      backgroundColor: '#e69e7a',
     },
   },
   createButton: {
@@ -90,39 +112,34 @@ const HeaderMain: React.FC<LayoutProps> = ({ user, open, setOpen }) => {
           <Link href="/" passHref={true}>
             <UnstyledButton>
               <Group>
-                <ThemeIcon color="cyan" variant="light">
+                <ThemeIcon style={{ color: '#3d2d1e' }} variant="light">
                   <DeviceAudioTape />
                 </ThemeIcon>
-                <Title order={2}>Thrift It</Title>
+                <Title order={2} className={classes.title}>
+                  Thrift It
+                </Title>
               </Group>
-            </UnstyledButton>
-          </Link>
-          <Link href="/about" passHref={true}>
-            <UnstyledButton className={classes.button} ml="sm">
-              <Text mx="sm" weight={500}>
-                About
-              </Text>
             </UnstyledButton>
           </Link>
         </Box>
         {user ? (
           <Box className={classes.leftNav}>
             <Link href={`/user/${user.id}`} passHref={true}>
-              <UnstyledButton className={classes.createButton} ml="sm">
+              <UnstyledButton className={classes.button} ml="sm">
                 <Text mx="sm" weight={500} py={6}>
                   My profile
                 </Text>
               </UnstyledButton>
             </Link>
             <Link href="/myposts" passHref={true}>
-              <UnstyledButton className={classes.createButton} ml="sm">
+              <UnstyledButton className={classes.button2} ml="sm">
                 <Text mx="sm" weight={500} py={6}>
                   My posts
                 </Text>
               </UnstyledButton>
             </Link>
             <Link href="/new" passHref={true}>
-              <UnstyledButton className={classes.createButton} ml="sm">
+              <UnstyledButton className={classes.button3} ml="sm">
                 <Text mx="sm" weight={500} py={6}>
                   Create a post
                 </Text>

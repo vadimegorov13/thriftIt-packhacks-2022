@@ -1,8 +1,15 @@
-import { UnstyledButton, Group, Text, ThemeIcon } from '@mantine/core';
-import { InfoSquare, SmartHome } from 'tabler-icons-react';
+import { Group, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
 import Link from 'next/link';
-import { UserData } from '../../types';
+import {
+  Login,
+  Logout,
+  Notes,
+  SmartHome,
+  SquarePlus,
+  User,
+} from 'tabler-icons-react';
 import { useAuth } from '../../hooks/useAuth';
+import { UserData } from '../../types';
 
 interface NavbarMainLinkProps {
   icon: JSX.Element;
@@ -17,12 +24,12 @@ interface NavbarMainLinksProps {
 }
 
 const data = [
-  { icon: <SmartHome size={16} />, color: 'blue', label: 'Home', href: '/' },
+  { icon: <SmartHome size={16} />, color: 'green', label: 'Home', href: '/' },
   {
-    icon: <InfoSquare size={16} />,
+    icon: <Login size={16} />,
     color: 'teal',
-    label: 'About',
-    href: '/about',
+    label: 'SignIn',
+    href: '/sign-in',
   },
 ];
 
@@ -53,7 +60,7 @@ export const NavbarMainLink: React.FC<NavbarMainLinkProps> = ({
                 : theme.colors.gray[0],
           },
         })}
-        onClick={label === 'Logout' ? signOut : () => {}}
+        onClick={label === 'SignOut' ? signOut : () => {}}
       >
         <Group>
           <ThemeIcon color={color} variant="light">
@@ -80,39 +87,33 @@ const NavbarMainLinks: React.FC<NavbarMainLinksProps> = ({ loading, user }) => {
     const loggedInData = [
       {
         icon: <SmartHome size={16} />,
-        color: 'blue',
+        color: 'green',
         label: 'Home',
         href: '/',
       },
       {
-        icon: <InfoSquare size={16} />,
-        color: 'teal',
-        label: 'About',
-        href: '/about',
-      },
-      {
-        icon: <InfoSquare size={16} />,
-        color: 'teal',
+        icon: <User size={16} />,
+        color: 'cyan',
         label: 'My Profile',
         href: `/user/${user!.id}`,
       },
       {
-        icon: <InfoSquare size={16} />,
-        color: 'teal',
+        icon: <Notes size={16} />,
+        color: 'blue',
         label: 'My Posts',
         href: '/myposts',
       },
       {
-        icon: <InfoSquare size={16} />,
+        icon: <SquarePlus size={16} />,
         color: 'teal',
         label: 'Create a post',
         href: '/new',
       },
       {
-        icon: <InfoSquare size={16} />,
-        color: 'teal',
-        label: 'Logout',
-        href: '/logout',
+        icon: <Logout size={16} />,
+        color: 'red',
+        label: 'SignOut',
+        href: '/',
       },
     ];
 

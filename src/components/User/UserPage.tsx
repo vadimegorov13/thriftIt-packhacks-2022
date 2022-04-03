@@ -8,6 +8,7 @@ import {
   Title,
   UnstyledButton,
   Modal,
+  createStyles,
 } from '@mantine/core';
 import { UserData } from '../../types';
 import Layout from '../Layout/Layout';
@@ -21,11 +22,30 @@ import AboutForm from './AboutForm';
 import ContactsForm from './ContactsForm';
 import UserContactsList from './UserContacts';
 
+const useStyles = createStyles((theme) => ({
+  username: {
+    fontFamily: 'Hoeflers',
+    fontWeight: 400,
+  },
+  card: {
+    backgroundColor: '#fffff7',
+  },
+  contacts: {
+    fontFamily: 'Delicious',
+    fontWeight: 400,
+  },
+  about: {
+    fontFamily: 'Rosebay',
+    fontWeight: 700,
+  },
+}));
+
 interface UserPageProps {
   user: UserData;
 }
 
 const UserPage: React.FC<UserPageProps> = ({ user }) => {
+  const { classes } = useStyles();
   const [opened, setOpened] = useState(false);
   const [openedContacts, setOpenedContacts] = useState(false);
   const [openedUsername, setOpenedUsername] = useState(false);
@@ -33,7 +53,7 @@ const UserPage: React.FC<UserPageProps> = ({ user }) => {
 
   return (
     <Layout>
-      <Card shadow="sm" p="lg" m={10}>
+      <Card shadow="sm" p="lg" m={10} className={classes.card}>
         <Box style={{ maxWidth: 500, margin: 'auto' }}>
           <Center>
             <UnstyledButton>
@@ -47,38 +67,32 @@ const UserPage: React.FC<UserPageProps> = ({ user }) => {
           </Center>
           <Center>
             <ActionIcon
-              variant="filled"
-              color="blue"
+              color="cyan"
               mr={8}
               onClick={() => setOpenedUsername(true)}
             >
               <Edit />
             </ActionIcon>
-            <Title>{user.username}</Title>
+            <Title className={classes.username}>{user.username}</Title>
           </Center>
           <Center>
             <Text size="sm" style={{ lineHeight: 1.5 }} mb={8}>
-              <Text weight={500} component="span">
+              <Text weight={500} component="span" className={classes.username}>
                 Joined on{' '}
               </Text>
-              <Text component="span">
-                {moment(new Date(user.joinedAt!)).format('LL')}
+              <Text component="span" className={classes.username}>
+                {moment(new Date(user.joinedAt!)).format('LL')} 🕹
               </Text>
             </Text>
           </Center>
 
           <Divider my="xs" />
           <Center>
-            <ActionIcon
-              variant="filled"
-              color="blue"
-              mr={8}
-              onClick={() => setOpened(true)}
-            >
+            <ActionIcon color="yellow" mr={8} onClick={() => setOpened(true)}>
               <Edit />
             </ActionIcon>
             <Text size="sm" style={{ lineHeight: 1.5 }}>
-              <Text weight={500}>About:</Text>
+              <Text className={classes.about}>About 🖌️</Text>
             </Text>
           </Center>
           <Center>
@@ -89,23 +103,24 @@ const UserPage: React.FC<UserPageProps> = ({ user }) => {
               mx={20}
               align="center"
             >
-              <Text>{user.about ? user.about : '404 not found'}</Text>
+              <Text weight={400}>
+                {user.about ? user.about : '404 not found'}
+              </Text>
             </Text>
           </Center>
 
           <Divider my="xs" />
           <Center>
             <ActionIcon
-              variant="filled"
-              color="blue"
+              color="red"
               mr={8}
               onClick={() => setOpenedContacts(true)}
             >
               <Edit />
             </ActionIcon>
-            <Text size="sm" style={{ lineHeight: 1.5 }} mb={8}>
-              <Text weight={500} component="span">
-                Contacts:
+            <Text size="sm" style={{ lineHeight: 1.5 }}>
+              <Text size="lg" component="span" className={classes.contacts}>
+                Contacts ☎️
               </Text>
             </Text>
           </Center>
@@ -127,25 +142,45 @@ const UserPage: React.FC<UserPageProps> = ({ user }) => {
       </Card>
       <UserPosts userId={user.id} />
       <Modal
+        opened={openedUsername}
+        onClose={() => setOpenedUsername(false)}
+        title={<Title className={classes.username}>What is your name?</Title>}
+        overlayColor={'#0e345b'}
+        overlayOpacity={0.2}
+        transition="rotate-right"
+        transitionDuration={600}
+        transitionTimingFunction="ease"
+        radius={'xs'}
+      >
+        <UsernameForm user={user} />
+      </Modal>
+      <Modal
         opened={opened}
         onClose={() => setOpened(false)}
-        title={<Title>Tell us about yourself</Title>}
+        title={<Title className={classes.about}>Tell us about yourself</Title>}
+        overlayColor={'#ffff9d'}
+        overlayOpacity={0.2}
+        transition="rotate-left"
+        transitionDuration={600}
+        transitionTimingFunction="ease"
+        radius={'xs'}
       >
         <AboutForm user={user} />
       </Modal>
       <Modal
         opened={openedContacts}
         onClose={() => setOpenedContacts(false)}
-        title={<Title>Give us your contacts</Title>}
+        title={
+          <Title className={classes.contacts}>Give us your contacts</Title>
+        }
+        overlayColor={'#ff6138'}
+        overlayOpacity={0.1}
+        transition="rotate-right"
+        transitionDuration={600}
+        transitionTimingFunction="ease"
+        radius={'xs'}
       >
         <ContactsForm user={user} />
-      </Modal>
-      <Modal
-        opened={openedUsername}
-        onClose={() => setOpenedUsername(false)}
-        title={<Title>What is your name?</Title>}
-      >
-        <UsernameForm user={user} />
       </Modal>
     </Layout>
   );

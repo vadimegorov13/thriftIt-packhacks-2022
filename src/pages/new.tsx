@@ -1,6 +1,5 @@
 import {
   ActionIcon,
-  Box,
   Button,
   Center,
   Group,
@@ -9,6 +8,7 @@ import {
   TextInput,
   useMantineTheme,
   Card,
+  createStyles,
 } from '@mantine/core';
 import { formList, useForm } from '@mantine/form';
 import { Trash } from 'tabler-icons-react';
@@ -19,7 +19,35 @@ import { useState } from 'react';
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import { dropzoneChildren } from '../components/Posts/DropZoneChildren';
 
+const useStyles = createStyles((theme) => ({
+  title: {
+    marginTop: '1rem',
+    fontFamily: 'Hoeflers',
+    fontWeight: 400,
+  },
+  card: {
+    backgroundColor: '#fffff7',
+  },
+  button: {
+    backgroundColor: '#ff6138',
+    color: '#ffffff',
+
+    '&:hover': {
+      backgroundColor: '#ff8c6e',
+    },
+  },
+  button2: {
+    backgroundColor: '#bdeb9f',
+    color: '#8a1a29',
+
+    '&:hover': {
+      backgroundColor: '#d4f0c2',
+    },
+  },
+}));
+
 const New = () => {
+  const { classes } = useStyles();
   const theme = useMantineTheme();
   const { loading } = useRequireAuth();
   const { createPost } = usePost();
@@ -78,31 +106,28 @@ const New = () => {
   } else {
     body = (
       <Center>
-        <Card style={{ width: '540px' }}>
+        <Card style={{ width: '540px' }} className={classes.card}>
           <form
             onSubmit={form.onSubmit((values) =>
               createPost(values, filesToUpload!)
             )}
           >
             <TextInput
-              required
-              label="Title"
+              label={<Text className={classes.title}>Title</Text>}
               placeholder="What do you want to give away?"
               radius="xs"
               {...form.getInputProps('title')}
             />
 
             <TextInput
-              required
-              label="Description"
+              label={<Text className={classes.title}>Description</Text>}
               placeholder="Give a short description of the item"
               radius="xs"
               {...form.getInputProps('description')}
             />
 
             <TextInput
-              required
-              label="Reason"
+              label={<Text className={classes.title}>Reason</Text>}
               placeholder="People might be interested why you want to give away this item"
               radius="xs"
               {...form.getInputProps('reason')}
@@ -111,7 +136,7 @@ const New = () => {
             <NumberInput
               defaultValue={0}
               placeholder="Your age"
-              label="Quality"
+              label={<Text className={classes.title}>Quality</Text>}
               radius="xs"
               step={1}
               min={0}
@@ -119,12 +144,17 @@ const New = () => {
               {...form.getInputProps('quality')}
             />
 
-            <Box>Tags: </Box>
+            <Text className={classes.title} mt="md">
+              Tags{' '}
+            </Text>
 
             {fields}
 
             <Group position="right" my="md">
-              <Button onClick={() => form.addListItem('tags', { tag: '' })}>
+              <Button
+                className={classes.button}
+                onClick={() => form.addListItem('tags', { tag: '' })}
+              >
                 Add Tag
               </Button>
             </Group>
@@ -139,7 +169,11 @@ const New = () => {
             </Dropzone>
 
             <Group position="right" mt="md">
-              <Button type="submit" disabled={!filesToUpload}>
+              <Button
+                type="submit"
+                disabled={!filesToUpload}
+                className={classes.button2}
+              >
                 Submit
               </Button>
             </Group>

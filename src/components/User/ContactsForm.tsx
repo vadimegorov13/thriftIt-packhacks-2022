@@ -1,14 +1,40 @@
-import { TextInput, Button, Group, Box, ActionIcon } from '@mantine/core';
+import {
+  TextInput,
+  Button,
+  Group,
+  Box,
+  ActionIcon,
+  createStyles,
+} from '@mantine/core';
 import { formList, useForm } from '@mantine/form';
 import { useAuth } from '../../hooks/useAuth';
 import { UserData } from '../../types';
 import { Trash } from 'tabler-icons-react';
 
+const useStyles = createStyles((theme) => ({
+  button: {
+    backgroundColor: '#ff6138',
+    color: '#ffffff',
+
+    '&:hover': {
+      backgroundColor: '#ff8c6e',
+    },
+  },
+  button2: {
+    backgroundColor: '#bdeb9f',
+    color: '#8a1a29',
+
+    '&:hover': {
+      backgroundColor: '#d4f0c2',
+    },
+  },
+}));
 interface ContactsFormProps {
   user: UserData;
 }
 
 const ContactsForm: React.FC<ContactsFormProps> = ({ user }) => {
+  const { classes } = useStyles();
   const { updateContacts } = useAuth();
 
   let contacts = [{ name: '', link: '' }];
@@ -56,18 +82,20 @@ const ContactsForm: React.FC<ContactsFormProps> = ({ user }) => {
       <form
         onSubmit={form.onSubmit((values) => updateContacts(values.contacts))}
       >
-        {fields}
+        <Box mt={25}>{fields}</Box>
 
-        <Group position="center" mt="md">
+        <Group position="right" mt="md"></Group>
+
+        <Group position="right" mt="md">
           <Button
             onClick={() => form.addListItem('contacts', { name: '', link: '' })}
+            className={classes.button2}
           >
             Add Contact
           </Button>
-        </Group>
-
-        <Group position="right" mt="md">
-          <Button type="submit">Update</Button>
+          <Button type="submit" className={classes.button}>
+            Update
+          </Button>
         </Group>
       </form>
     </Box>

@@ -35,7 +35,9 @@ const UsernameForm: React.FC<UsernameFormProps> = ({ user }) => {
         />
 
         <Group position="right" mt="md">
-          <Button type="submit">Update</Button>
+          <Button type="submit" color={'cyan'}>
+            Update
+          </Button>
         </Group>
       </form>
     </Box>
