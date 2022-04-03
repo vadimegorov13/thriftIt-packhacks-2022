@@ -1,4 +1,4 @@
-import { Group, Text } from '@mantine/core';
+import { Box, Text } from '@mantine/core';
 import { UserContacs } from '../../types';
 
 interface UserContactsListProps {
@@ -9,16 +9,17 @@ const UserContactsList: React.FC<UserContactsListProps> = ({ contacts }) => {
   return (
     <>
       {contacts.map((contact) => (
-        <div key={contact.name + contact.link}>
-          <Group>
-            <Text size="sm" style={{ lineHeight: 1.5 }} mb={8}>
-              <Text weight={500} component="span">
-                {contact.name}:{' '}
-              </Text>
-              <Text component="span">{contact.link}</Text>
+        <Box
+          key={contact.name + contact.link}
+          style={{ minHeight: 10, height: 30 }}
+        >
+          <Text size="sm" style={{ lineHeight: 1.5 }} mb={8} align="center">
+            <Text weight={500} component="span">
+              {contact.name}:{' '}
             </Text>
-          </Group>
-        </div>
+            <Text component="span">{contact.link}</Text>
+          </Text>
+        </Box>
       ))}
     </>
   );

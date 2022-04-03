@@ -48,13 +48,12 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       <Card shadow="sm" p="lg" m={2}>
         <Group position="apart" style={{ marginBottom: 5 }}>
           <Title order={3}>{post.title}</Title>
-          <ActionButtons owner={owner} postId={post.id} />
         </Group>
         <Card.Section>
           <Tabs>
             {pictures.map((picture, index) => (
               <Tabs.Tab title={`${index + 1}`} icon={<Album />} key={picture}>
-                <Image src={picture} height={400} alt="image" />
+                <Image src={picture} height={300} alt="image" />
               </Tabs.Tab>
             ))}
           </Tabs>
@@ -90,7 +89,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </Text>
 
         <Group position="apart">
-          <PostOwner owner={owner} />
+          <ActionButtons owner={owner} postId={post.id} />
           <Group position="right">
             <Button
               variant="light"
@@ -106,7 +105,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           opened={opened}
           onClose={() => setOpened(false)}
           // eslint-disable-next-line react/no-unescaped-entities
-          title={<Title>{owner.username}'s contacts</Title>}
+          title={<PostOwner owner={owner} />}
         >
           <UserContactsList contacts={owner.contacts} />
         </Modal>

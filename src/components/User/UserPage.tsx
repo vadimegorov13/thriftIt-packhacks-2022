@@ -34,14 +34,14 @@ const UserPage: React.FC<UserPageProps> = ({ user }) => {
   return (
     <Layout>
       <Card shadow="sm" p="lg" m={10}>
-        <Box style={{ maxWidth: '400px', margin: 'auto' }}>
+        <Box style={{ maxWidth: 500, margin: 'auto' }}>
           <Center>
             <UnstyledButton>
               <Avatar
                 src={user.photoUrl}
                 alt={user.username}
                 radius="xl"
-                size="lg"
+                size="xl"
               />
             </UnstyledButton>
           </Center>
@@ -56,9 +56,18 @@ const UserPage: React.FC<UserPageProps> = ({ user }) => {
             </ActionIcon>
             <Title>{user.username}</Title>
           </Center>
+          <Center>
+            <Text size="sm" style={{ lineHeight: 1.5 }} mb={8}>
+              <Text weight={500} component="span">
+                Joined on{' '}
+              </Text>
+              <Text component="span">
+                {moment(new Date(user.joinedAt!)).format('LL')}
+              </Text>
+            </Text>
+          </Center>
 
           <Divider my="xs" />
-
           <Center>
             <ActionIcon
               variant="filled"
@@ -73,21 +82,17 @@ const UserPage: React.FC<UserPageProps> = ({ user }) => {
             </Text>
           </Center>
           <Center>
-            <Text size="sm" style={{ lineHeight: 1.5 }} mb={8}>
+            <Text
+              size="sm"
+              style={{ lineHeight: 1.5 }}
+              my={8}
+              mx={20}
+              align="center"
+            >
               <Text>{user.about ? user.about : '404 not found'}</Text>
             </Text>
           </Center>
-          <Divider my="xs" />
-          <Center>
-            <Text size="sm" style={{ lineHeight: 1.5 }} mb={8}>
-              <Text weight={500} component="span">
-                Joined on{' '}
-              </Text>
-              <Text component="span">
-                {moment(new Date(user.joinedAt!)).format('LL')}
-              </Text>
-            </Text>
-          </Center>
+
           <Divider my="xs" />
           <Center>
             <ActionIcon
@@ -106,9 +111,11 @@ const UserPage: React.FC<UserPageProps> = ({ user }) => {
           </Center>
           <Center>
             {contacts.length > 0 ? (
-              <UserContactsList contacts={contacts} />
+              <Box mx={10} mt={8} mb={30}>
+                <UserContactsList contacts={contacts} />
+              </Box>
             ) : (
-              <Text size="sm" style={{ lineHeight: 1.5 }} mb={8}>
+              <Text size="sm" style={{ lineHeight: 1.5 }} my={8} align="center">
                 <Text>
                   Your list of contacts is empty! Please add your contacts, so
                   other users can see them.
