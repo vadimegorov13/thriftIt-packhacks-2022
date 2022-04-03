@@ -39,7 +39,7 @@ const useStyles = createStyles((theme) => ({
 
 const SignInComponent = () => {
   const { classes } = useStyles();
-  const { signInWithGoogle, signInWithGitHub } = useAuth();
+  const { signInWithGoogle, signInWithGitHub, signInWithTwitter } = useAuth();
 
   return (
     <div style={{ width: 340, margin: 'auto' }}>
@@ -76,7 +76,7 @@ const SignInComponent = () => {
           </Center>
           <Center>
             <Button
-              onClick={signInWithGitHub}
+              onClick={signInWithTwitter}
               leftIcon={<BrandTwitter />}
               className={classes.twitter}
               mb={10}

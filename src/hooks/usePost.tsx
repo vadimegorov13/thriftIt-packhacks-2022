@@ -27,6 +27,8 @@ export const usePost = (): usePostType => {
 
         const fileUrls: string[] = [];
 
+        router.push('/');
+
         filesToUpload.map(async (file) => {
           const fileRef = storage.ref(`posts/${newPost.id}/${file.name}`);
           const uploadFile = fileRef.put(file);

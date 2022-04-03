@@ -18,11 +18,17 @@ const ShowPosts: React.FC<ShowPostsProps> = ({ posts }) => {
         { maxWidth: 600, cols: 1, spacing: 'sm' },
       ]}
     >
-      {posts.map((post: PostData) => (
-        <div key={post.id}>
-          <PostCard post={post} />
-        </div>
-      ))}
+      {posts.map((post: PostData) => {
+        if (post.pictures.length > 0) {
+          return (
+            <div key={post.id}>
+              <PostCard post={post} />
+            </div>
+          );
+        } else {
+          return null;
+        }
+      })}
     </SimpleGrid>
   );
   return <>{body}</>;

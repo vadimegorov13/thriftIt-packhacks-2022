@@ -67,6 +67,20 @@ export const useAuthProvider = (): useAuthType => {
     return;
   };
 
+  const signInWithTwitter = async () => {
+    const github = new firebase.auth.TwitterAuthProvider();
+    await auth
+      .signInWithPopup(github)
+      .then(() => console.log('login success'))
+      .catch((err) => console.log(err.code))
+      .finally(() => {
+        setLoading(false);
+        setUpdate(+1);
+        router.push('/');
+      });
+    return;
+  };
+
   // Sign out user
   const signOut = async (): Promise<void> => {
     // Change the state of the user
@@ -189,6 +203,7 @@ export const useAuthProvider = (): useAuthType => {
     signOut,
     signInWithGoogle,
     signInWithGitHub,
+    signInWithTwitter,
     updateAbout,
     updateUsername,
     updateContacts,
