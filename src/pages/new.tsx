@@ -7,16 +7,23 @@ import {
   NumberInput,
   Text,
   TextInput,
+  useMantineTheme,
 } from '@mantine/core';
 import { formList, useForm } from '@mantine/form';
 import { Trash } from 'tabler-icons-react';
 import Layout from '../components/Layout/Layout';
 import { usePost } from '../hooks/usePost';
 import { useRequireAuth } from '../hooks/useRequireAuth';
+import { useState } from 'react';
+import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { dropzoneChildren } from '../components/Posts/DropZoneChildren';
 
 const New = () => {
+  const theme = useMantineTheme();
   const { loading } = useRequireAuth();
   const { createPost } = usePost();
+
+  const [filesToUpload, setFiles] = useState<File[] | null>(null);
 
   const form = useForm({
     initialValues: {
@@ -70,7 +77,11 @@ const New = () => {
   } else {
     body = (
       <Center>
-        <form onSubmit={form.onSubmit((values) => createPost(values))}>
+        <form
+          onSubmit={form.onSubmit((values) =>
+            createPost(values, filesToUpload!)
+          )}
+        >
           <TextInput
             required
             label="Title"
@@ -116,8 +127,19 @@ const New = () => {
             </Button>
           </Group>
 
+          <Dropzone
+            onDrop={(files) => setFiles(files)}
+            onReject={(files) => console.log('rejected files', files)}
+            maxSize={3 * 1024 ** 2}
+            accept={IMAGE_MIME_TYPE}
+          >
+            {(status) => dropzoneChildren(status, theme)}
+          </Dropzone>
+
           <Group position="right" mt="md">
-            <Button type="submit">Submit</Button>
+            <Button type="submit" disabled={!filesToUpload}>
+              Submit
+            </Button>
           </Group>
         </form>
       </Center>

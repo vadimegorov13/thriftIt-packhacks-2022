@@ -18,7 +18,7 @@ export type PostData = {
   description: string;
   reason: string;
   quality: number;
-  // pictures: string[];
+  pictures: string[];
   tags: PostTag[];
   available: boolean;
   createdAt: number;
@@ -68,7 +68,7 @@ export const authContextDefaultValues: useAuthType = {
 
 /** Type for useParticipants hook */
 export type usePostType = {
-  createPost: (post: PostForm) => Promise<void>;
+  createPost: (post: PostForm, filesToUpload: File[]) => Promise<void>;
   deletePost: (postId: string) => Promise<void>;
   editPost: (postId: string, post: PostForm) => Promise<void>;
   toggleAvailability: (postId: string) => Promise<void>;

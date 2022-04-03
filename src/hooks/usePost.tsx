@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { db } from '../firebase/firebase';
+import { db, storage } from '../firebase/firebase';
 import { PostData, PostForm, usePostType } from '../types';
 import { useAuth } from './useAuth';
+import firebase from 'firebase/compat/app';
 
 export const usePost = (): usePostType => {
   const { user } = useAuth();
@@ -10,18 +11,38 @@ export const usePost = (): usePostType => {
 
   const [postLoading, setLoading] = useState(true);
 
-  const createPost = async (post: PostForm) => {
+  const createPost = async (post: PostForm, filesToUpload: File[]) => {
     if (user) {
       try {
         const newPost = db.collection('posts').doc();
         await newPost.set({
           id: newPost.id,
           ...post,
+          pictures: [],
           available: true,
           createdAt: Date.now(),
           updatedAt: Date.now(),
           ownerId: user.id,
         });
+
+        const fileUrls: string[] = [];
+
+        filesToUpload.map(async (file) => {
+          const fileRef = storage.ref(`posts/${newPost.id}/${file.name}`);
+          const uploadFile = fileRef.put(file);
+          uploadFile.on('state_changed', console.log, console.error, () => {
+            fileRef.getDownloadURL().then(async (url) => {
+              await db
+                .collection('posts')
+                .doc(newPost.id)
+                .update({
+                  pictures: firebase.firestore.FieldValue.arrayUnion(url),
+                });
+            });
+          });
+        });
+
+        console.log(fileUrls);
 
         await db
           .collection('users')

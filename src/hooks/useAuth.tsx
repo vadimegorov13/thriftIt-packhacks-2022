@@ -47,6 +47,7 @@ export const useAuthProvider = (): useAuthType => {
       .catch((err) => console.log(err.code))
       .finally(() => {
         setLoading(false);
+        setUpdate(+1);
         router.push('/');
       });
     return;
@@ -60,6 +61,7 @@ export const useAuthProvider = (): useAuthType => {
       .catch((err) => console.log(err.code))
       .finally(() => {
         setLoading(false);
+        setUpdate(+1);
         router.push('/');
       });
     return;

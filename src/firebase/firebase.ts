@@ -12,9 +12,10 @@ if (!firebase.apps.length) {
 const app = firebase.app();
 const auth = firebase.auth();
 const db = firebase.firestore();
+const storage = firebase.storage();
 
 // return firebase components
-export { auth, db, app };
+export { auth, db, app, storage };
 
 console.log(
   app.name ? 'Firebase is working!😎😎😎' : 'Firebase is not working 😫😪🤔'
