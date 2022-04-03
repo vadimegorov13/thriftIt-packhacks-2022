@@ -10,6 +10,7 @@ import {
   Center,
   Box,
   Modal,
+  Tabs,
 } from '@mantine/core';
 import { PostData, UserData } from '../../types';
 import { doc, getFirestore } from 'firebase/firestore';
@@ -19,6 +20,7 @@ import PostOwner from './PostOwner';
 import ActionButtons from './ActionButtons';
 import { useState } from 'react';
 import UserContactsList from '../User/UserContacts';
+import { Album } from 'tabler-icons-react';
 
 interface PostCardProps {
   post: PostData;
@@ -40,6 +42,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     );
   } else {
     const owner = authorData?.data() as UserData;
+    const pictures = post.pictures;
 
     body = (
       <Card shadow="sm" p="lg" m={2}>
@@ -48,11 +51,13 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           <ActionButtons owner={owner} postId={post.id} />
         </Group>
         <Card.Section>
-          <Image
-            src="https://yt3.ggpht.com/IhrkWQ9jdq0-NqX6tuMIkzia560fo_jTg9qWYy223eGIDu3ZcJPRkl1hgY2ZuxLTvRyAdjRd0w=s900-c-k-c0x00ffffff-no-rj"
-            height={400}
-            alt="ame"
-          />
+          <Tabs>
+            {pictures.map((picture, index) => (
+              <Tabs.Tab title={`${index + 1}`} icon={<Album />} key={picture}>
+                <Image src={picture} height={400} alt="image" />
+              </Tabs.Tab>
+            ))}
+          </Tabs>
         </Card.Section>
 
         <Group m={8}>
