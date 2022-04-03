@@ -170,7 +170,7 @@ export const usePost = (): usePostType => {
           }
         });
         console.log('setposts ', posts);
-        setMyPosts(posts);
+        setMyPosts(userPosts);
         setLoading(false);
       });
     } catch (err) {

@@ -37,6 +37,8 @@ export const useAuthProvider = (): useAuthType => {
   const [user, setUser] = useState<UserData | null>(null);
   const router = useRouter();
 
+  const [update, setUpdate] = useState<number>(0);
+
   const signInWithGoogle = async () => {
     const google = new firebase.auth.GoogleAuthProvider();
     await auth
@@ -76,7 +78,14 @@ export const useAuthProvider = (): useAuthType => {
   const updateAbout = async (about: string) => {
     if (user) {
       try {
-        await db.collection('users').doc(user.id).update({ about });
+        await db
+          .collection('users')
+          .doc(user.id)
+          .update({ about })
+          .then(() => {
+            router.reload();
+          });
+        setUpdate(+1);
       } catch (err) {
         console.log('Something went wrong: ', err);
       }
@@ -89,7 +98,14 @@ export const useAuthProvider = (): useAuthType => {
   const updateUsername = async (username: string) => {
     if (user) {
       try {
-        await db.collection('users').doc(user.id).update({ username });
+        await db
+          .collection('users')
+          .doc(user.id)
+          .update({ username })
+          .then(() => {
+            router.reload();
+          });
+        setUpdate(+1);
       } catch (err) {
         console.log('Something went wrong: ', err);
       }
@@ -102,7 +118,14 @@ export const useAuthProvider = (): useAuthType => {
   const updateContacts = async (contacts: UserContacs[]) => {
     if (user) {
       try {
-        await db.collection('users').doc(user.id).update({ contacts });
+        await db
+          .collection('users')
+          .doc(user.id)
+          .update({ contacts })
+          .then(() => {
+            router.reload();
+          });
+        setUpdate(+1);
       } catch (err) {
         console.log('Something went wrong: ', err);
       }
@@ -156,7 +179,7 @@ export const useAuthProvider = (): useAuthType => {
     });
 
     return () => unsub();
-  }, []);
+  }, [update]);
 
   return {
     user,

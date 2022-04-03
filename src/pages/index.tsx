@@ -1,4 +1,4 @@
-import { Box, Text, Title } from '@mantine/core';
+import { Text } from '@mantine/core';
 import { useState, useEffect } from 'react';
 import Layout from '../components/Layout/Layout';
 import ShowPosts from '../components/Posts/ShowPosts';
@@ -39,10 +39,9 @@ const Home = () => {
     console.log('posts', posts);
 
     body = (
-      <Box>
-        <Title>All posts</Title>
+      <>
         <ShowPosts posts={posts} />
-      </Box>
+      </>
     );
   }
 

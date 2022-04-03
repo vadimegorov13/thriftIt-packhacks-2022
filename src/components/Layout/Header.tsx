@@ -10,7 +10,7 @@ import {
   UnstyledButton,
   ThemeIcon,
 } from '@mantine/core';
-import { ListDetails } from 'tabler-icons-react';
+import { DeviceAudioTape } from 'tabler-icons-react';
 import Link from 'next/link';
 import { UserData } from '../../types';
 import { useAuth } from '../../hooks/useAuth';
@@ -91,7 +91,7 @@ const HeaderMain: React.FC<LayoutProps> = ({ user, open, setOpen }) => {
             <UnstyledButton>
               <Group>
                 <ThemeIcon color="cyan" variant="light">
-                  <ListDetails />
+                  <DeviceAudioTape />
                 </ThemeIcon>
                 <Title order={2}>ThriftIt</Title>
               </Group>

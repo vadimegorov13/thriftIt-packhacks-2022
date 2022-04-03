@@ -81,24 +81,11 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
           {post.quality}/10
         </Text>
 
-        {post.available ? (
-          <Badge color="blue" variant="light" mt={8}>
-            Available
-          </Badge>
-        ) : (
-          <Badge color="red" variant="light" mt={8}>
-            Not available
-          </Badge>
-        )}
-
         <Group position="apart">
           <PostOwner owner={authorData?.data() as UserData} />
           <Group position="right">
             <Button variant="light" color="pink" style={{ marginTop: 10 }}>
               Contact
-            </Button>
-            <Button variant="light" color="blue" style={{ marginTop: 10 }}>
-              Save
             </Button>
           </Group>
         </Group>
