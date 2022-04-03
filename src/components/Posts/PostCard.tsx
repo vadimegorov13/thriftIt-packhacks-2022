@@ -9,6 +9,7 @@ import {
   ScrollArea,
   Center,
   Box,
+  Modal,
 } from '@mantine/core';
 import { PostData, UserData } from '../../types';
 import { doc, getFirestore } from 'firebase/firestore';
@@ -16,6 +17,8 @@ import { useDocumentOnce } from 'react-firebase-hooks/firestore';
 import { app } from '../../firebase/firebase';
 import PostOwner from './PostOwner';
 import ActionButtons from './ActionButtons';
+import { useState } from 'react';
+import UserContactsList from '../User/UserContacts';
 
 interface PostCardProps {
   post: PostData;
@@ -25,6 +28,7 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
   const [authorData, authorDataLoading] = useDocumentOnce(
     doc(getFirestore(app), 'users', `${post.ownerId}`)
   );
+  const [opened, setOpened] = useState(false);
 
   let body;
 
@@ -35,14 +39,13 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
       </Text>
     );
   } else {
+    const owner = authorData?.data() as UserData;
+
     body = (
       <Card shadow="sm" p="lg" m={2}>
         <Group position="apart" style={{ marginBottom: 5 }}>
           <Title order={3}>{post.title}</Title>
-          <ActionButtons
-            owner={authorData?.data() as UserData}
-            postId={post.id}
-          />
+          <ActionButtons owner={owner} postId={post.id} />
         </Group>
         <Card.Section>
           <Image
@@ -82,13 +85,26 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
         </Text>
 
         <Group position="apart">
-          <PostOwner owner={authorData?.data() as UserData} />
+          <PostOwner owner={owner} />
           <Group position="right">
-            <Button variant="light" color="pink" style={{ marginTop: 10 }}>
+            <Button
+              variant="light"
+              color="pink"
+              style={{ marginTop: 10 }}
+              onClick={() => setOpened(true)}
+            >
               Contact
             </Button>
           </Group>
         </Group>
+        <Modal
+          opened={opened}
+          onClose={() => setOpened(false)}
+          // eslint-disable-next-line react/no-unescaped-entities
+          title={<Title>{owner.username}'s contacts</Title>}
+        >
+          <UserContactsList contacts={owner.contacts} />
+        </Modal>
       </Card>
     );
   }

@@ -6,8 +6,6 @@ interface UserContactsListProps {
 }
 
 const UserContactsList: React.FC<UserContactsListProps> = ({ contacts }) => {
-  console.log(contacts);
-
   return (
     <>
       {contacts.map((contact) => (
