@@ -11,6 +11,7 @@ import {
   Box,
   Modal,
   Tabs,
+  createStyles,
 } from '@mantine/core';
 import { PostData, UserData } from '../../types';
 import { doc, getFirestore } from 'firebase/firestore';
@@ -22,11 +23,19 @@ import { useState } from 'react';
 import UserContactsList from '../User/UserContacts';
 import { Album } from 'tabler-icons-react';
 
+const useStyles = createStyles((theme) => ({
+  title: {
+  },
+  card: {
+  }
+}));
+
 interface PostCardProps {
   post: PostData;
 }
 
 const PostCard: React.FC<PostCardProps> = ({ post }) => {
+  const { classes } = useStyles();
   const [authorData, authorDataLoading] = useDocumentOnce(
     doc(getFirestore(app), 'users', `${post.ownerId}`)
   );
@@ -45,9 +54,11 @@ const PostCard: React.FC<PostCardProps> = ({ post }) => {
     const pictures = post.pictures;
 
     body = (
-      <Card shadow="sm" p="lg" m={2}>
+      <Card shadow="sm" p="lg" m={2} className={classes.card}>
         <Group position="apart" style={{ marginBottom: 5 }}>
-          <Title order={3}>{post.title}</Title>
+          <Title order={3} className={classes.title}>
+            {post.title}
+          </Title>
         </Group>
         <Card.Section>
           <Tabs>

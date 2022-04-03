@@ -7,6 +7,7 @@ import {
   Group,
   NumberInput,
   TextInput,
+  Card
 } from '@mantine/core';
 import { formList, useForm } from '@mantine/form';
 import { Trash } from 'tabler-icons-react';
@@ -62,6 +63,7 @@ const EditPostForm: React.FC<EditPostFormProps> = ({ post }) => {
 
   return (
     <Center>
+      <Card style={{width: '540px'}}>
       <form
         onSubmit={form.onSubmit((values) => {
           editPost(post.id, values);
@@ -106,16 +108,16 @@ const EditPostForm: React.FC<EditPostFormProps> = ({ post }) => {
 
         {fields}
 
-        <Group position="center" mt="md">
+        <Group position="right" mt="md">
           <Button onClick={() => form.addListItem('tags', { tag: '' })}>
             Add Tag
           </Button>
         </Group>
 
         <Group position="right" mt="md">
-          <Button type="submit">Submit</Button>
+          <Button type="submit" style={{width: '90px'}}>Submit</Button>
         </Group>
-      </form>
+      </form></Card>
     </Center>
   );
 };

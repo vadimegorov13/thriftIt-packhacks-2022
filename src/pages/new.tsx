@@ -8,6 +8,7 @@ import {
   Text,
   TextInput,
   useMantineTheme,
+  Card,
 } from '@mantine/core';
 import { formList, useForm } from '@mantine/form';
 import { Trash } from 'tabler-icons-react';
@@ -77,71 +78,73 @@ const New = () => {
   } else {
     body = (
       <Center>
-        <form
-          onSubmit={form.onSubmit((values) =>
-            createPost(values, filesToUpload!)
-          )}
-        >
-          <TextInput
-            required
-            label="Title"
-            placeholder="What do you want to give away?"
-            radius="xs"
-            {...form.getInputProps('title')}
-          />
-
-          <TextInput
-            required
-            label="Description"
-            placeholder="Give a short description of the item"
-            radius="xs"
-            {...form.getInputProps('description')}
-          />
-
-          <TextInput
-            required
-            label="Reason"
-            placeholder="People might be interested why you want to give away this item"
-            radius="xs"
-            {...form.getInputProps('reason')}
-          />
-
-          <NumberInput
-            defaultValue={0}
-            placeholder="Your age"
-            label="Quality"
-            radius="xs"
-            step={1}
-            min={0}
-            max={10}
-            {...form.getInputProps('quality')}
-          />
-
-          <Box>Tags: </Box>
-
-          {fields}
-
-          <Group position="center" mt="md">
-            <Button onClick={() => form.addListItem('tags', { tag: '' })}>
-              Add Tag
-            </Button>
-          </Group>
-
-          <Dropzone
-            onDrop={(files) => setFiles(files)}
-            onReject={(files) => console.log('rejected files', files)}
-            maxSize={3 * 1024 ** 2}
-            accept={IMAGE_MIME_TYPE}
+        <Card style={{ width: '540px' }}>
+          <form
+            onSubmit={form.onSubmit((values) =>
+              createPost(values, filesToUpload!)
+            )}
           >
-            {(status) => dropzoneChildren(status, theme)}
-          </Dropzone>
+            <TextInput
+              required
+              label="Title"
+              placeholder="What do you want to give away?"
+              radius="xs"
+              {...form.getInputProps('title')}
+            />
 
-          <Group position="right" mt="md">
-            <Button type="submit" disabled={!filesToUpload}>
-              Submit
-            </Button>
-          </Group>
-        </form>
+            <TextInput
+              required
+              label="Description"
+              placeholder="Give a short description of the item"
+              radius="xs"
+              {...form.getInputProps('description')}
+            />
+
+            <TextInput
+              required
+              label="Reason"
+              placeholder="People might be interested why you want to give away this item"
+              radius="xs"
+              {...form.getInputProps('reason')}
+            />
+
+            <NumberInput
+              defaultValue={0}
+              placeholder="Your age"
+              label="Quality"
+              radius="xs"
+              step={1}
+              min={0}
+              max={10}
+              {...form.getInputProps('quality')}
+            />
+
+            <Box>Tags: </Box>
+
+            {fields}
+
+            <Group position="right" my="md">
+              <Button onClick={() => form.addListItem('tags', { tag: '' })}>
+                Add Tag
+              </Button>
+            </Group>
+
+            <Dropzone
+              onDrop={(files) => setFiles(files)}
+              onReject={(files) => console.log('rejected files', files)}
+              maxSize={3 * 1024 ** 2}
+              accept={IMAGE_MIME_TYPE}
+            >
+              {(status) => dropzoneChildren(status, theme)}
+            </Dropzone>
+
+            <Group position="right" mt="md">
+              <Button type="submit" disabled={!filesToUpload}>
+                Submit
+              </Button>
+            </Group>
+          </form>
+        </Card>
       </Center>
     );
   }
