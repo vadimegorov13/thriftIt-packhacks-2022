@@ -7,7 +7,7 @@ import {
   Group,
   NumberInput,
   TextInput,
-  Card
+  Card,
 } from '@mantine/core';
 import { formList, useForm } from '@mantine/form';
 import { Trash } from 'tabler-icons-react';
@@ -63,61 +63,64 @@ const EditPostForm: React.FC<EditPostFormProps> = ({ post }) => {
 
   return (
     <Center>
-      <Card style={{width: '540px'}}>
-      <form
-        onSubmit={form.onSubmit((values) => {
-          editPost(post.id, values);
-        })}
-      >
-        <TextInput
-          required
-          label="Title"
-          placeholder="What do you want to give away?"
-          radius="xs"
-          {...form.getInputProps('title')}
-        />
+      <Card style={{ width: '540px' }}>
+        <form
+          onSubmit={form.onSubmit((values) => {
+            editPost(post.id, values);
+          })}
+        >
+          <TextInput
+            required
+            label="Title"
+            placeholder="What do you want to give away?"
+            radius="xs"
+            {...form.getInputProps('title')}
+          />
 
-        <TextInput
-          required
-          label="Description"
-          placeholder="Give a short description of the item"
-          radius="xs"
-          {...form.getInputProps('description')}
-        />
+          <TextInput
+            required
+            label="Description"
+            placeholder="Give a short description of the item"
+            radius="xs"
+            {...form.getInputProps('description')}
+          />
 
-        <TextInput
-          required
-          label="Reason"
-          placeholder="People might be interested why you want to give away this item"
-          radius="xs"
-          {...form.getInputProps('reason')}
-        />
+          <TextInput
+            required
+            label="Reason"
+            placeholder="People might be interested why you want to give away this item"
+            radius="xs"
+            {...form.getInputProps('reason')}
+          />
 
-        <NumberInput
-          defaultValue={0}
-          placeholder="Your age"
-          label="Quality"
-          radius="xs"
-          step={1}
-          min={0}
-          max={10}
-          {...form.getInputProps('quality')}
-        />
+          <NumberInput
+            defaultValue={0}
+            placeholder="Your age"
+            label="Quality"
+            radius="xs"
+            step={1}
+            min={0}
+            max={10}
+            {...form.getInputProps('quality')}
+          />
 
-        <Box>Tags: </Box>
+          <Box>Tags: </Box>
 
-        {fields}
+          {fields}
 
-        <Group position="right" mt="md">
-          <Button onClick={() => form.addListItem('tags', { tag: '' })}>
-            Add Tag
-          </Button>
-        </Group>
+          <Group position="right" mt="md">
+            <Button onClick={() => form.addListItem('tags', { tag: '' })}>
+              Add Tag
+            </Button>
+          </Group>
 
-        <Group position="right" mt="md">
-          <Button type="submit" style={{width: '90px'}}>Submit</Button>
-        </Group>
-      </form></Card>
+          <Group position="right" mt="md">
+            <Button type="submit" style={{ width: '90px' }}>
+              Submit
+            </Button>
+          </Group>
+        </form>
+      </Card>
     </Center>
   );
 };

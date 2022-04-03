@@ -24,10 +24,8 @@ import UserContactsList from '../User/UserContacts';
 import { Album } from 'tabler-icons-react';
 
 const useStyles = createStyles((theme) => ({
-  title: {
-  },
-  card: {
-  }
+  title: {},
+  card: {},
 }));
 
 interface PostCardProps {
