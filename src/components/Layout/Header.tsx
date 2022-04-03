@@ -93,7 +93,7 @@ const HeaderMain: React.FC<LayoutProps> = ({ user, open, setOpen }) => {
                 <ThemeIcon color="cyan" variant="light">
                   <DeviceAudioTape />
                 </ThemeIcon>
-                <Title order={2}>ThriftIt</Title>
+                <Title order={2}>Thrift It</Title>
               </Group>
             </UnstyledButton>
           </Link>
@@ -107,6 +107,13 @@ const HeaderMain: React.FC<LayoutProps> = ({ user, open, setOpen }) => {
         </Box>
         {user ? (
           <Box className={classes.leftNav}>
+            <Link href={`/user/${user.id}`} passHref={true}>
+              <UnstyledButton className={classes.createButton} ml="sm">
+                <Text mx="sm" weight={500} py={6}>
+                  My profile
+                </Text>
+              </UnstyledButton>
+            </Link>
             <Link href="/myposts" passHref={true}>
               <UnstyledButton className={classes.createButton} ml="sm">
                 <Text mx="sm" weight={500} py={6}>
@@ -128,7 +135,7 @@ const HeaderMain: React.FC<LayoutProps> = ({ user, open, setOpen }) => {
                 onClick={signOut}
               >
                 <Text mx="sm" weight={500} py={6}>
-                  Logout
+                  SignOut
                 </Text>
               </UnstyledButton>
             </Link>

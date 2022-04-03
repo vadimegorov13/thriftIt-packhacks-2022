@@ -26,16 +26,6 @@ const data = [
   },
 ];
 
-const loggedInData = [
-  { icon: <SmartHome size={16} />, color: 'blue', label: 'Home', href: '/' },
-  {
-    icon: <InfoSquare size={16} />,
-    color: 'teal',
-    label: 'About',
-    href: '/about',
-  },
-];
-
 export const NavbarMainLink: React.FC<NavbarMainLinkProps> = ({
   icon,
   color,
@@ -87,6 +77,45 @@ const NavbarMainLinks: React.FC<NavbarMainLinksProps> = ({ loading, user }) => {
   } else if (!user) {
     links = data.map((link) => <NavbarMainLink {...link} key={link.label} />);
   } else {
+    const loggedInData = [
+      {
+        icon: <SmartHome size={16} />,
+        color: 'blue',
+        label: 'Home',
+        href: '/',
+      },
+      {
+        icon: <InfoSquare size={16} />,
+        color: 'teal',
+        label: 'About',
+        href: '/about',
+      },
+      {
+        icon: <InfoSquare size={16} />,
+        color: 'teal',
+        label: 'My Profile',
+        href: `/user/${user!.id}`,
+      },
+      {
+        icon: <InfoSquare size={16} />,
+        color: 'teal',
+        label: 'My Posts',
+        href: '/myposts',
+      },
+      {
+        icon: <InfoSquare size={16} />,
+        color: 'teal',
+        label: 'Create a post',
+        href: '/new',
+      },
+      {
+        icon: <InfoSquare size={16} />,
+        color: 'teal',
+        label: 'Logout',
+        href: '/logout',
+      },
+    ];
+
     links = loggedInData.map((link) => (
       <NavbarMainLink {...link} key={link.label} />
     ));
