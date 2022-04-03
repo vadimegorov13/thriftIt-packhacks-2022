@@ -162,7 +162,7 @@ const New = () => {
             <Dropzone
               onDrop={(files) => setFiles(files)}
               onReject={(files) => console.log('rejected files', files)}
-              maxSize={15 * 1024 ** 2}
+              maxSize={5 * 1024 ** 2}
               accept={IMAGE_MIME_TYPE}
             >
               {(status) => dropzoneChildren(status, theme)}
